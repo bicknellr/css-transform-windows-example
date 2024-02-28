@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<style>
+body, html {
+  margin: 0px;
+  width: 100%;
+  height: 100%;
+  padding: 0px;
+  overflow: hidden;
+}
+
+#container {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  bottom: 0px;
+  left: 0px;
+
+  perspective: 300px;
+
+  display: grid;
+  place-items: center center;
+}
+
+#controls {
+  position: absolute;
+
+  display: flex;
+  flex-direction: column;
+
+  background: #ccc;
+  padding: 8px;
+}
+</style>
+
+<body>
+
+<div id="container">
+  <div id="ancestor">
+    <window-viewport id="viewport">
+      <draggable-window class="window">
+        <span slot="title">Window 1</span>
+        Draw here:
+        <br>
+        <drawable-canvas></drawable-canvas>
+      </draggable-window>
+      <draggable-window class="window">
+        <span slot="title">Window 2</span>
+        Draw here:
+        <br>
+        <drawable-canvas></drawable-canvas>
+      </draggable-window>
+      <draggable-window class="window">
+        <span slot="title">Window 3</span>
+        Draw here:
+        <br>
+        <drawable-canvas></drawable-canvas>
+      </draggable-window>
+    </window-viewport>
+  </div>
+</div>
+
+<details id="controls" open>
+  <summary>controls</summary>
+
+  <button onclick="eval(this.innerHTML)">
+    ancestor.style.transform="";
+  </button>
+
+  <button onclick="eval(this.innerHTML)">
+    ancestor.style.transform="rotateY(35deg) rotateX(35deg)";
+  </button>
+
+  <button onclick="eval(this.innerHTML)">
+    ancestor.style.transform="rotateY(-50deg) rotateX(-20deg)";
+  </button>
+
+  <button onclick="eval(this.innerHTML)">
+    ancestor.style.transform="rotateX(70deg)";
+  </button>
+</details>
+
+<script type="module">
+import "./window-viewport.js";
+import "./draggable-window.js";
+import "./drawable-canvas.js";
+</script>
