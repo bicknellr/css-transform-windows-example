@@ -2,6 +2,8 @@ class WindowViewport extends HTMLElement {
   #transformAncestor = undefined;
   #transform = new DOMMatrix();
 
+  #nextZIndex = 1;
+
   constructor() {
     super();
 
@@ -9,6 +11,7 @@ class WindowViewport extends HTMLElement {
       <style>
        :host {
           display: inline-block;
+          position: relative;
           overflow: hidden;
           width: 600px;
           height: 400px;
@@ -34,9 +37,15 @@ class WindowViewport extends HTMLElement {
   #pointerdown = ((e) => {
     console.log(e);
 
-    // Ignore the event if it started on anything other than this element or something in its shadow
-    // root.
+    // If the event started on anything other than this element or something in its shadow root,
+    // then assume it's a window and move it to the top of the stacking context.
     if (e.target !== this) {
+      // Find the child of this element containing the element that was the target of the event.
+      let child = e.target;
+      while (child.parentNode !== this) {
+        child = child.parentNode;
+      }
+      child.style.zIndex = this.#nextZIndex++;
       return;
     }
 

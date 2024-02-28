@@ -17,10 +17,16 @@ class DraggableWindow extends HTMLElement {
           padding: 8px;
 
           cursor: grab;
+          user-select: none;
 
           &:hover {
             background: #ccc;
           }
+        }
+
+        slot:not([name]) {
+          display: block;
+          padding: 8px;
         }
       </style>
       <div id="title"><slot name="title"></slot></div>
