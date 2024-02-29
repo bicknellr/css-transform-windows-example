@@ -10,15 +10,14 @@ class WindowViewport extends HTMLElement {
     this.attachShadow({mode: "open"}).innerHTML = `
       <style>
        :host {
-          display: inline-block;
-          position: relative;
-          overflow: hidden;
-          width: 600px;
-          height: 400px;
-          background: #cff;
-          background-image:
-            repeating-linear-gradient(to right, #8888, #fff8 100px),
-            repeating-linear-gradient(to bottom, #8888, #fff8 100px);
+         display: inline-block;
+         position: relative;
+         width: 600px;
+         height: 400px;
+         background: #cff;
+         background-image:
+           repeating-linear-gradient(to right, #8888, #fff8 100px),
+           repeating-linear-gradient(to bottom, #8888, #fff8 100px);
        }
       </style>
       <div id="transformAncestor">
@@ -49,7 +48,7 @@ class WindowViewport extends HTMLElement {
       return;
     }
 
-    this.#dragStartPoint = {x: e.clientX, y: e.clientY};
+    this.#dragStartPoint = {x: e.offsetX, y: e.offsetY};
     this.#dragStartTransform = DOMMatrix.fromMatrix(this.#transform);
 
     this.setPointerCapture(e.pointerId);
@@ -62,8 +61,8 @@ class WindowViewport extends HTMLElement {
     console.log(e);
 
     this.#transform = this.#dragStartTransform.translate(
-      e.clientX - this.#dragStartPoint.x,
-      e.clientY - this.#dragStartPoint.y,
+      e.offsetX - this.#dragStartPoint.x,
+      e.offsetY - this.#dragStartPoint.y,
     );
     this.#updateTransform();
   }).bind(this);

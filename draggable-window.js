@@ -38,13 +38,11 @@ class DraggableWindow extends HTMLElement {
   }
 
   #dragStartPoint = undefined;
-  #dragStartTransform = undefined;
 
   #pointerdown = ((e) => {
     console.log(e);
 
-    this.#dragStartPoint = {x: e.clientX, y: e.clientY};
-    this.#dragStartTransform = DOMMatrix.fromMatrix(this.#transform);
+    this.#dragStartPoint = {x: e.offsetX, y: e.offsetY};
 
     this.setPointerCapture(e.pointerId);
     this.addEventListener("pointermove", this.#pointermove);
@@ -55,9 +53,9 @@ class DraggableWindow extends HTMLElement {
   #pointermove = ((e) => {
     console.log(e);
 
-    this.#transform = this.#dragStartTransform.translate(
-      e.clientX - this.#dragStartPoint.x,
-      e.clientY - this.#dragStartPoint.y,
+    this.#transform = this.#transform.translate(
+      e.offsetX - this.#dragStartPoint.x,
+      e.offsetY - this.#dragStartPoint.y,
     );
     this.#updateTransform();
   }).bind(this);
